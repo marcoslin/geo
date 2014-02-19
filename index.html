@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Locator</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <link href="style/root.css" type="text/css" rel="stylesheet">
+        <link href="style/shapes.css" type="text/css" rel="stylesheet">
+        <link href="style/actionBox.css" type="text/css" rel="stylesheet">
+        <link href="style/map.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="actionBox">
+            <div class="tabs">
+                <ul>
+                    <li>
+                        <a id="showOpenStreetMap" href="#showOpenStreetMap">OpenStreetMap</a>
+                    </li><li>
+                        <a id="showGoogleMap" href="#showGoogleMap">GoogleMap</a>
+                    </li><li>
+                        <a id="showHybridMap" href="#showHybridMap">HybridMap</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="geolocation">
+                <a id="currentPositionBtn" href="javascript:;">
+                    <div class="currentPositionBtn">
+                        <div class="north"></div>
+                        <div class="east"></div>
+                        <div class="south"></div>
+                        <div class="west"></div>
+                    </div>
+                </a>
+                <div class="geolocationOptions">
+                    <input id="enableHighAccuracy" type="checkbox" checked><label for="enableHighAccuracy">enableHighAccuracy</label>
+                    <input id="timeout" type="text" placeholder="timeout (10s)">
+                    <input id="maximumAge" type="text" placeholder="maximumAge (0s)">
+                </div>
+            </div>
+            <div class="searchBox">
+                <div>
+                    <div id="nominatimSearch">
+                        <form>
+                            <input placeholder="Nominatim Search" autocomplete="on" />
+                            <button id="searchBtn">Search</button>
+                        </form>
+                    </div>
+                    <div id="googleSearch">
+                        <input placeholder="Google Search" autocomplete="off" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="maps">
+            <div id="openstreetmap"></div>
+            <div id="googlemap"></div>
+            <div id="hybridmap"></div>
+        </div>
+
+        <script src="http://openlayers.org/api/OpenLayers.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+        <script src="scripts/utils/JS.js"></script>
+        <script src="scripts/utils/GeolocationManager.js"></script>
+        <script src="scripts/utils/MapViewControllerFactory.js"></script>
+        <script src="scripts/controllers/MapViewController.js"></script>
+        <script src="scripts/controllers/OpenStreetMapViewController.js"></script>
+        <script src="scripts/controllers/GoogleMapViewController.js"></script>
+        <script src="scripts/controllers/HybridMapViewController.js"></script>
+        <script src="scripts/controllers/MapSwitcherViewController.js"></script>
+        <script src="scripts/controllers/GeolocationViewController.js"></script>
+        <script src="scripts/controllers/SearchBoxViewController.js"></script>
+        <script src="scripts/start.js"></script>
+    </body>
+</html>
