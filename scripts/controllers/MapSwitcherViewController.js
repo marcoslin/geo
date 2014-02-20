@@ -58,7 +58,8 @@ MapSwitcherViewController.prototype = {
      * @param {String} action
      */
     performSwitch: function(action) {
-        console.log('MapSwitcherViewController.performSwitch ' + action);
+        console.log('MapSwitcherViewController.performSwitch(action)');
+        console.log(action);
 
         if (action === '#showOpenStreetMap') {
             this.switchToOpenStreetMap();
@@ -101,9 +102,9 @@ MapSwitcherViewController.prototype = {
             /* Get the current position of the device and show the map */
             var successCallback = window.mMapViewController.showMap.bind(window.mMapViewController);
             var errorCallback = window.mMapViewController.handleGeolocationErrors.bind(window.mMapViewController);
-            var options = window.mGeolocationViewController.getOptions();
+            var positionOptions = window.mGeolocationViewController.getPositionOptions();
 
-            window.mGeolocationManager.getCurrentPosition(successCallback, errorCallback, options);
+            window.mGeolocationManager.getCurrentPosition(successCallback, errorCallback, positionOptions);
         }
         else {
             /* Save the MapViewController on window */
@@ -139,9 +140,9 @@ MapSwitcherViewController.prototype = {
             /* Get the current position of the device and show the map */
             var successCallback = window.mMapViewController.showMap.bind(window.mMapViewController);
             var errorCallback = window.mMapViewController.handleGeolocationErrors.bind(window.mMapViewController);
-            var options = window.mGeolocationViewController.getOptions();
+            var positionOptions = window.mGeolocationViewController.getPositionOptions();
 
-            window.mGeolocationManager.getCurrentPosition(successCallback, errorCallback, options);
+            window.mGeolocationManager.getCurrentPosition(successCallback, errorCallback, positionOptions);
         }
         else {
             /* Save the MapViewController on window */
@@ -177,9 +178,9 @@ MapSwitcherViewController.prototype = {
             /* Get the current position of the device and show the map */
             var successCallback = window.mMapViewController.showMap.bind(window.mMapViewController);
             var errorCallback = window.mMapViewController.handleGeolocationErrors.bind(window.mMapViewController);
-            var options = window.mGeolocationViewController.getOptions();
+            var positionOptions = window.mGeolocationViewController.getPositionOptions();
 
-            window.mGeolocationManager.getCurrentPosition(successCallback, errorCallback, options);
+            window.mGeolocationManager.getCurrentPosition(successCallback, errorCallback, positionOptions);
         }
         else {
             /* Save the MapViewController on window */

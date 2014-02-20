@@ -4,9 +4,9 @@ function GeolocationViewController() {
 
     /* Initialize DOM objects */
     this.currentPositionButton = document.querySelector('#currentPositionBtn');
-    this.enableHighAccuracyInput = document.querySelector('.geolocationOptions #enableHighAccuracy');
-    this.timeoutInput = document.querySelector('.geolocationOptions #timeout');
-    this.maximumAgeInput = document.querySelector('.geolocationOptions #maximumAge');
+    this.enableHighAccuracyInput = document.querySelector('.positionOptions #enableHighAccuracy');
+    this.timeoutInput = document.querySelector('.positionOptions #timeout');
+    this.maximumAgeInput = document.querySelector('.positionOptions #maximumAge');
 
     /* Default option values */
     this.defaultEnableHighAccuracy = this.enableHighAccuracyInput.checked; // as configured in the HTML
@@ -32,17 +32,17 @@ GeolocationViewController.prototype = {
 
         var successCallback = window.mMapViewController.showPosition.bind(window.mMapViewController);
         var errorCallback = window.mMapViewController.handleGeolocationErrors.bind(window.mMapViewController);
-        var options = this.getOptions();
+        var positionOptions = this.getPositionOptions();
 
-        window.mGeolocationManager.getCurrentPosition(successCallback, errorCallback, options);
+        window.mGeolocationManager.getCurrentPosition(successCallback, errorCallback, positionOptions);
     },
     /*
-     * getOptions
+     * getPositionOptions
      * Return the customized options for the Geolocation API
      * @return {Object} options
      */
-    getOptions: function() {
-        console.log('GeolocationViewController.getOptions()');
+    getPositionOptions: function() {
+        console.log('GeolocationViewController.getPositionOptions()');
         
         var enableHighAccuracy = this.enableHighAccuracyInput.checked;
         

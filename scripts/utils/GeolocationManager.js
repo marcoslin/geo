@@ -12,17 +12,17 @@ GeolocationManager.prototype = {
      * Gets the current position of the device
      * @param {Function} successCallback
      * @param {Function} errorCallback
-     * @param {Object} options
+     * @param {PositionOptions} positionOptions
      */
-    getCurrentPosition: function(successCallback, errorCallback, options) {
+    getCurrentPosition: function(successCallback, errorCallback, positionOptions) {
         console.log('GeolocationManager.getCurrentPosition(successCallback, errorCallback, options)');
         console.log(successCallback);
         console.log(errorCallback);
-        console.log(options);
+        console.log(positionOptions);
         
         /* If the geolocation object exists in navigator, get the current position of the device */
         if (this.geolocation) {
-            this.geolocation.getCurrentPosition(successCallback, errorCallback, options);
+            this.geolocation.getCurrentPosition(successCallback, errorCallback, positionOptions);
         }
         else { // if the geolocation API is not supported
             errorCallback();

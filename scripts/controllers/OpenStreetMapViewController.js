@@ -25,7 +25,7 @@ OpenStreetMapViewController.prototype = {
     /*
      * showMap
      * Show the map in the specified position
-     * @param {Geoposition} position
+     * @param {Position} position
      */
     showMap: function(position) {
         MapViewController.prototype.showMap.call(this, position);
@@ -33,14 +33,14 @@ OpenStreetMapViewController.prototype = {
         /* Calculate the OpenStreetMap position */
         var osmPosition = new OpenLayers.LonLat(position.coords.longitude, position.coords.latitude).transform(this.fromProjection, this.toProjection);
 
-        /* Display points of interest around the position */
-        this.showPOIs(position);
-
         /* Set the center of the map */
         this.map.setCenter(osmPosition, this.defaultZoom);
 
         /* Add a marker to the center */
         this.markers.addMarker(new OpenLayers.Marker(osmPosition));
+
+        /* Display points of interest around the position */
+        this.showPOIs(position);
 
         /* Keep track of the current position */
         this.currentPosition = position;
@@ -48,7 +48,7 @@ OpenStreetMapViewController.prototype = {
     /*
      * showPOIs
      * Show the Points Of Interest around the specified position
-     * @param {Geoposition|OpenLayers.LonLat} position
+     * @param {Position|OpenLayers.LonLat} position
      */
     showPOIs: function(position) {
         MapViewController.prototype.showPOIs.call(this, position);
@@ -92,7 +92,7 @@ OpenStreetMapViewController.prototype = {
     /*
      * showPosition
      * Show the specified position on the map
-     * @param {Geoposition|OpenLayers.LonLat} position
+     * @param {Position|OpenLayers.LonLat} position
      */
     showPosition: function(position) {
 
@@ -113,7 +113,7 @@ OpenStreetMapViewController.prototype = {
         /* Set the center of the map */
         this.map.setCenter(osmPosition, this.defaultZoom);
 
-        /* Cover the case in which the user firstly denied access to location info and accepted in a second time */
+        /* Cover the case in which the user firstly denies access to location info and accepts it in a second time */
         if (this.currentPosition === null) {
             this.showMap(position);
         }
@@ -176,9 +176,9 @@ OpenStreetMapViewController.prototype = {
     /*
      * handleGeolocationErrors
      * Handles geolocation errors
-     * @param {Geoposition} position
+     * @param {PositionError} position
      */
-    handleGeolocationErrors: function(position) {
-        MapViewController.prototype.handleGeolocationErrors.call(this, position);
+    handleGeolocationErrors: function(positionError) {
+        MapViewController.prototype.handleGeolocationErrors.call(this, positionError);
     }
 };

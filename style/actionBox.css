@@ -74,14 +74,14 @@
     margin: 0.6rem 0.6rem 0 0;
 }
 
-.actionBox > div.geolocation .geolocationOptions input[type="checkbox"]{
+.actionBox > div.geolocation .positionOptions input[type="checkbox"]{
 }
 
-.actionBox > div.geolocation .geolocationOptions label {
+.actionBox > div.geolocation .positionOptions label {
     cursor: pointer;
 }
 
-.actionBox > div.geolocation .geolocationOptions input[type="text"]{
+.actionBox > div.geolocation .positionOptions input[type="text"]{
     display: block;
     width: 60%;
 }

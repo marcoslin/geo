@@ -36,37 +36,16 @@ GoogleMapViewController.prototype = {
     /*
      * showMap
      * Show the map in the specified position
-     * @param {Geoposition} position
+     * @param {Position} position
      */
     showMap: function(position) {
         MapViewController.prototype.showMap.call(this, position);
 
-        var gmPosition;
-
-        if (position) {
-            if (position.coords) { // if coords are provided
-
-                /* Keep track of the current position */
-                this.currentPosition = position;
-            }
-            else {
-                /* Show a error message */
-                alert(position.message);
-
-                /* Set the position argument to a default position provided by the superclass in case of error */
-                position = this.errorPosition;
-            }
-        }
-        else {
-            /* Show a error message */
-            alert("Geolocation API not supported");
-
-            /* Set the position argument to a default position provided by the superclass in case of error */
-            position = this.errorPosition;
-        }
-
         /* Calculate the Google Maps position */
-        gmPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        var gmPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+        /* Set the center of the map */
+        this.map.setCenter(gmPosition);
 
         /* Add a marker to the specified position */
         new google.maps.Marker({
@@ -75,11 +54,11 @@ GoogleMapViewController.prototype = {
             title: 'Current position'
         });
 
-        /* Set the center of the map */
-        this.map.setCenter(gmPosition);
-
         /* Display points of interest around the position */
         this.showPOIs(gmPosition);
+
+        /* Keep track of the current position */
+        this.currentPosition = position;
     },
     /*
      * showPOIs
@@ -165,10 +144,10 @@ GoogleMapViewController.prototype = {
     /*
      * handleGeolocationErrors
      * Handles geolocation errors
-     * @param {Geoposition} position
+     * @param {PositionError} positionError
      */
-    handleGeolocationErrors: function(position) {
-        MapViewController.prototype.handleGeolocationErrors.call(this, position);
+    handleGeolocationErrors: function(positionError) {
+        MapViewController.prototype.handleGeolocationErrors.call(this, positionError);
     }
 };
 
