@@ -19,28 +19,6 @@ function MapSwitcherViewController() {
 
     var self = this;
 
-    /* Manage tabs */
-    this.openstreetmapViewControllerButton.onclick = function() {
-
-        self.switchToOpenStreetMap();
-
-        return true;
-    };
-
-    this.googlemapViewControllerButton.onclick = function() {
-
-        self.switchToGoogleMap();
-
-        return true;
-    };
-
-    this.hybridmapViewControllerButton.onclick = function() {
-
-        self.switchToHybridMap();
-
-        return true;
-    };
-
     /* Manage target elements */
     window.onhashchange = function() {
 
