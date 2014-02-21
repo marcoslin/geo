@@ -76,13 +76,6 @@ MapSwitcherViewController.prototype = {
 
             /* Save the MapViewController on window */
             window.mMapViewController = this.openstreetmapViewController;
-
-            /* Get the current position of the device and show the map */
-            var successCallback = window.mMapViewController.showMap.bind(window.mMapViewController);
-            var errorCallback = window.mMapViewController.handleGeolocationErrors.bind(window.mMapViewController);
-            var positionOptions = window.mGeolocationViewController.getPositionOptions();
-
-            window.mGeolocationManager.getCurrentPosition(successCallback, errorCallback, positionOptions);
         }
         else {
             /* Save the MapViewController on window */
@@ -114,13 +107,6 @@ MapSwitcherViewController.prototype = {
 
             /* Save the MapViewController on window */
             window.mMapViewController = this.googlemapViewController;
-
-            /* Get the current position of the device and show the map */
-            var successCallback = window.mMapViewController.showMap.bind(window.mMapViewController);
-            var errorCallback = window.mMapViewController.handleGeolocationErrors.bind(window.mMapViewController);
-            var positionOptions = window.mGeolocationViewController.getPositionOptions();
-
-            window.mGeolocationManager.getCurrentPosition(successCallback, errorCallback, positionOptions);
         }
         else {
             /* Save the MapViewController on window */
@@ -152,13 +138,6 @@ MapSwitcherViewController.prototype = {
 
             /* Save the MapViewController on window */
             window.mMapViewController = this.hybridmapViewController;
-
-            /* Get the current position of the device and show the map */
-            var successCallback = window.mMapViewController.showMap.bind(window.mMapViewController);
-            var errorCallback = window.mMapViewController.handleGeolocationErrors.bind(window.mMapViewController);
-            var positionOptions = window.mGeolocationViewController.getPositionOptions();
-
-            window.mGeolocationManager.getCurrentPosition(successCallback, errorCallback, positionOptions);
         }
         else {
             /* Save the MapViewController on window */

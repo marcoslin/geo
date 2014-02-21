@@ -1,10 +1,10 @@
 
 function HybridMapViewController(options) { // extends GoogleMapViewController
-    GoogleMapViewController.call(this, options);
+    MapViewController.call(this, options);
 
     /* Set GoogleMap options */
     var mapOptions = {
-        zoom: 15,
+        zoom: this.defaultZoom,
         mapTypeId: "OSM",
         mapTypeControl: false,
         streetViewControl: false
@@ -22,6 +22,13 @@ function HybridMapViewController(options) { // extends GoogleMapViewController
         name: "OpenStreetMap",
         maxZoom: 18
     }));
+    
+    /* Show the map */
+    var gmPosition = new google.maps.LatLng(this.defaultPosition.coords.latitude, this.defaultPosition.coords.longitude);
+    this.map.setCenter(gmPosition);
+    
+    /* Initialize Google Search Box */
+    this.initSearchBox();
 }
 
 /* HybridMapViewController extends GoogleMapViewController */

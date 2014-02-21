@@ -4,29 +4,19 @@ function GoogleMapViewController(options) { // extends MapViewController
 
     /* Set GoogleMap options */
     var mapOptions = {
-        zoom: 15,
+        zoom: this.defaultZoom,
     };
 
-    /* Initialize superclass attributes */
+    /* Initialize the Google Map */
     this.map = new google.maps.Map(document.getElementById(options.mapId), mapOptions);
-    this.searchInput = document.querySelector('#googleSearch input');
 
-    /* Declare and initialize GoogleMapViewController attributes */
-    this.searchBox = new google.maps.places.SearchBox(this.searchInput);
+    /* Show the map */
+    var gmPosition = new google.maps.LatLng(this.defaultPosition.coords.latitude, this.defaultPosition.coords.longitude);
+    this.map.setCenter(gmPosition);
 
-    var self = this;
-
-    /* Listen for the event fired when the user selects an item from the pick list. */
-    google.maps.event.addListener(this.searchBox, 'places_changed', function() {
-        self.search(self.searchInput.value);
-    });
-
-    /* Bias the SearchBox results towards places that are within the bounds of the current map's viewport. */
-    google.maps.event.addListener(this.map, 'bounds_changed', function() {
-        var bounds = self.map.getBounds();
-        self.searchBox.setBounds(bounds);
-    });
-
+    /* Initialize Google Search Box */
+    this.searchBox = null;
+    this.initSearchBox();
 }
 
 /* GoogleMapViewController extends MapViewController */
@@ -34,12 +24,12 @@ JS.extend(GoogleMapViewController, MapViewController);
 
 GoogleMapViewController.prototype = {
     /*
-     * showMap
-     * Show the map in the specified position
-     * @param {Position} position
+     * showPosition
+     * Show the specified position on the map
+     * @param {google.maps.LatLng} position
      */
-    showMap: function(position) {
-        MapViewController.prototype.showMap.call(this, position);
+    showPosition: function(position) {
+        MapViewController.prototype.showPosition.call(this, position);
 
         /* Calculate the Google Maps position */
         var gmPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -47,18 +37,82 @@ GoogleMapViewController.prototype = {
         /* Set the center of the map */
         this.map.setCenter(gmPosition);
 
-        /* Add a marker to the specified position */
-        new google.maps.Marker({
-            position: gmPosition,
+        if (this.currentPosition === null) { // if this is the first time this method is invoked
+
+            /* Add a marker to the center */
+            new google.maps.Marker({
+                position: gmPosition,
+                map: this.map,
+                title: 'Current position'
+            });
+
+            /* Show POIs only the first time this method is called */
+            this.showPOIs(gmPosition);
+
+            /* Keep track of the current position */
+            this.currentPosition = gmPosition;
+        }
+    },
+    /*
+     * handleGeolocationErrors
+     * Handles geolocation errors
+     * @param {PositionError} positionError
+     */
+    handleGeolocationErrors: function(positionError) {
+        MapViewController.prototype.handleGeolocationErrors.call(this, positionError);
+    },
+    /*
+     * initSearchBox
+     * Initialize Google Search Box
+     */
+    initSearchBox: function() {
+        if (this.searchBox) {
+            // already initialized
+        }
+        else {
+            this.searchInput = document.querySelector('#googleSearch input');
+            this.searchBox = new google.maps.places.SearchBox(this.searchInput);
+
+            var self = this;
+
+            /* Listen for the event fired when the user selects an item from the pick list. */
+            google.maps.event.addListener(this.searchBox, 'places_changed', function() {
+                self.search(self.searchInput.value);
+            });
+
+            /* Bias the SearchBox results towards places that are within the bounds of the current map's viewport. */
+            google.maps.event.addListener(this.map, 'bounds_changed', function() {
+                var bounds = self.map.getBounds();
+                self.searchBox.setBounds(bounds);
+            });
+        }
+    },
+    /*
+     * search
+     * Perform the search based on the specified query
+     * @param {String} query
+     */
+    search: function(query) {
+        MapViewController.prototype.search.call(this, query);
+
+        /* Retrieve the places found and use the first one */
+        var places = this.searchBox.getPlaces();
+        var place = places[0];
+
+        /* Add a marker on the place found */
+        var marker = new google.maps.Marker({
             map: this.map,
-            title: 'Current position'
+            title: place.name,
+            position: place.geometry.location
         });
 
-        /* Display points of interest around the position */
-        this.showPOIs(gmPosition);
+        /* Set the center of the map */
+        this.map.setCenter(place.geometry.location);
 
-        /* Keep track of the current position */
-        this.currentPosition = position;
+        /* Display points of interest around the position */
+        this.showPOIs(place.geometry.location);
+
+        return false;
     },
     /*
      * showPOIs
@@ -94,60 +148,6 @@ GoogleMapViewController.prototype = {
                 this.infowindow.open(self.map, this);
             });
         }
-    },
-    /*
-     * showPosition
-     * Show the specified position on the map
-     * @param {google.maps.LatLng} position
-     */
-    showPosition: function(position) {
-        MapViewController.prototype.showPosition.call(this, position);
-
-        /* Calculate the Google Maps position */
-        var gmPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-        /* Set the center of the map */
-        this.map.setCenter(gmPosition);
-
-        /* Cover the case in which the user firstly denied access to location info and accepted in a second time */
-        if (this.currentPosition === null) {
-            this.showMap(position);
-        }
-    },
-    /*
-     * search
-     * Perform the search based on the specified query
-     * @param {String} query
-     */
-    search: function(query) {
-        MapViewController.prototype.search.call(this, query);
-
-        /* Retrieve the places found and use the first one */
-        var places = this.searchBox.getPlaces();
-        var place = places[0];
-
-        /* Add a marker on the place found */
-        var marker = new google.maps.Marker({
-            map: this.map,
-            title: place.name,
-            position: place.geometry.location
-        });
-
-        /* Set the center of the map */
-        this.map.setCenter(place.geometry.location);
-
-        /* Display points of interest around the position */
-        this.showPOIs(place.geometry.location);
-
-        return false;
-    },
-    /*
-     * handleGeolocationErrors
-     * Handles geolocation errors
-     * @param {PositionError} positionError
-     */
-    handleGeolocationErrors: function(positionError) {
-        MapViewController.prototype.handleGeolocationErrors.call(this, positionError);
     }
 };
 
