@@ -10,7 +10,7 @@ function GeolocationViewController() {
 
     /* Default option values */
     this.defaultEnableHighAccuracy = this.enableHighAccuracyInput.checked; // as configured in the HTML
-    this.defaultTimeout = 10000; // 10 seconds
+    this.defaultTimeout = 8000; // 8 seconds
     this.defaultMaximumAge = 0; // 0 seconds, no-cache
     
     var self = this;
@@ -48,12 +48,12 @@ GeolocationViewController.prototype = {
         
         var timeout = this.defaultTimeout;
         if (this.timeoutInput.value && this.timeoutInput.value !== "") {
-            timeout = this.timeoutInput.value * 1000;
+            timeout = this.timeoutInput.value;
         }
         
         var maximumAge = this.defaultMaximumAge;
         if (this.maximumAgeInput.value && this.maximumAgeInput.value !== "") {
-            maximumAge = this.maximumAgeInput.value * 1000;
+            maximumAge = this.maximumAgeInput.value;
         }
         
         var options = {

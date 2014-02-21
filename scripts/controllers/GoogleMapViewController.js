@@ -66,26 +66,23 @@ GoogleMapViewController.prototype = {
      * Initialize Google Search Box
      */
     initSearchBox: function() {
-        if (this.searchBox) {
-            // already initialized
-        }
-        else {
-            this.searchInput = document.querySelector('#googleSearch input');
-            this.searchBox = new google.maps.places.SearchBox(this.searchInput);
+        console.log('GoogleMapViewController.initSearchBox()');
 
-            var self = this;
+        this.searchInput = document.querySelector('#googleSearch input');
+        this.searchBox = new google.maps.places.SearchBox(this.searchInput);
 
-            /* Listen for the event fired when the user selects an item from the pick list. */
-            google.maps.event.addListener(this.searchBox, 'places_changed', function() {
-                self.search(self.searchInput.value);
-            });
+        var self = this;
 
-            /* Bias the SearchBox results towards places that are within the bounds of the current map's viewport. */
-            google.maps.event.addListener(this.map, 'bounds_changed', function() {
-                var bounds = self.map.getBounds();
-                self.searchBox.setBounds(bounds);
-            });
-        }
+        /* Listen for the event fired when the user selects an item from the pick list. */
+        google.maps.event.addListener(this.searchBox, 'places_changed', function() {
+            self.search(self.searchInput.value);
+        });
+
+        /* Bias the SearchBox results towards places that are within the bounds of the current map's viewport. */
+        google.maps.event.addListener(this.map, 'bounds_changed', function() {
+            var bounds = self.map.getBounds();
+            self.searchBox.setBounds(bounds);
+        });
     },
     /*
      * search
