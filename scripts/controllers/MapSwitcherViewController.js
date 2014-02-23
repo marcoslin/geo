@@ -7,11 +7,6 @@ function MapSwitcherViewController() {
     this.googlemapViewControllerBox = document.querySelector('#googlemap');
     this.hybridmapViewControllerBox = document.querySelector('#hybridmap');
 
-    /* Tabs */
-    this.openstreetmapViewControllerButton = document.querySelector('#showOpenStreetMap');
-    this.googlemapViewControllerButton = document.querySelector('#showGoogleMap');
-    this.hybridmapViewControllerButton = document.querySelector('#showHybridMap');
-
     /* Attributes to keep track of initialized MapViewControllers */
     this.openstreetmapViewController = null;
     this.googlemapViewController = null;
@@ -76,6 +71,10 @@ MapSwitcherViewController.prototype = {
 
             /* Save the MapViewController on window */
             window.mMapViewController = this.openstreetmapViewController;
+
+            /* Initializes the map and the search box */
+            window.mMapViewController.initMap();
+            window.mMapViewController.initSearchBox();
         }
         else {
             /* Save the MapViewController on window */
@@ -107,6 +106,10 @@ MapSwitcherViewController.prototype = {
 
             /* Save the MapViewController on window */
             window.mMapViewController = this.googlemapViewController;
+
+            /* Initializes the map and the search box */
+            window.mMapViewController.initMap();
+            window.mMapViewController.initSearchBox();
         }
         else {
             /* Save the MapViewController on window */
@@ -127,7 +130,7 @@ MapSwitcherViewController.prototype = {
         this.hybridmapViewControllerBox.style.display = 'block';
 
         /* Show the google search bar */
-        window.mSearchBoxViewController.showGoogleSearch();
+        window.mSearchBoxViewController.showHybridSearch();
 
         /* Create a new MapViewController if it doesn't exist already */
         if (this.hybridmapViewController === null) {
@@ -138,6 +141,10 @@ MapSwitcherViewController.prototype = {
 
             /* Save the MapViewController on window */
             window.mMapViewController = this.hybridmapViewController;
+
+            /* Initializes the map and the search box */
+            window.mMapViewController.initMap();
+            window.mMapViewController.initSearchBox();
         }
         else {
             /* Save the MapViewController on window */

@@ -1,6 +1,17 @@
 
 function HybridMapViewController(options) { // extends GoogleMapViewController
-    MapViewController.call(this, options);
+    GoogleMapViewController.call(this, options);
+}
+
+/* HybridMapViewController extends GoogleMapViewController */
+JS.extend(HybridMapViewController, GoogleMapViewController);
+
+/*
+ * initMap
+ * Initializes and shows the map
+ */
+HybridMapViewController.prototype.initMap = function() {
+    MapViewController.prototype.initMap.call(this);
 
     /* Set GoogleMap options */
     var mapOptions = {
@@ -11,7 +22,8 @@ function HybridMapViewController(options) { // extends GoogleMapViewController
     };
 
     /* Initialize superclass attributes */
-    this.map = new google.maps.Map(document.getElementById(options.mapId), mapOptions);
+    this.map = new google.maps.Map(document.getElementById(this.mapId), mapOptions);
+    this.searchInput = document.querySelector('#hybridSearch input');
 
     /* Define OSM map type pointing at the OpenStreetMap tile server */
     this.map.mapTypes.set("OSM", new google.maps.ImageMapType({
@@ -22,14 +34,11 @@ function HybridMapViewController(options) { // extends GoogleMapViewController
         name: "OpenStreetMap",
         maxZoom: 18
     }));
-    
+
     /* Show the map */
     var gmPosition = new google.maps.LatLng(this.defaultPosition.coords.latitude, this.defaultPosition.coords.longitude);
     this.map.setCenter(gmPosition);
-    
+
     /* Initialize Google Search Box */
     this.initSearchBox();
-}
-
-/* HybridMapViewController extends GoogleMapViewController */
-JS.extend(HybridMapViewController, GoogleMapViewController);
+};

@@ -3,16 +3,9 @@ function SearchBoxViewController() {
     console.log('GeolocationViewController()');
 
     /* Initialize DOM objects */
-    this.googleSearch = document.querySelector('#googleSearch');
     this.nominatimSearch = document.querySelector('#nominatimSearch');
-
-    var self = this;
-
-    /* Initialize event handlers */
-    this.nominatimSearch.querySelector('button').onclick = function() {
-        self.search(window.mMapViewController.searchInput.value);
-        return false;
-    };
+    this.googleSearch = document.querySelector('#googleSearch');
+    this.hybridSearch = document.querySelector('#hybridSearch');
 }
 
 SearchBoxViewController.prototype = {
@@ -39,6 +32,7 @@ SearchBoxViewController.prototype = {
     showNominatimSearch: function() {
         console.log('SearchBoxViewController.showNominatimSearch()');
         this.googleSearch.style.display = 'none';
+        this.hybridSearch.style.display = 'none';
         this.nominatimSearch.style.display = 'block';
     },
     /*
@@ -48,6 +42,17 @@ SearchBoxViewController.prototype = {
     showGoogleSearch: function() {
         console.log('SearchBoxViewController.showGoogleSearch()');
         this.nominatimSearch.style.display = 'none';
+        this.hybridSearch.style.display = 'none';
         this.googleSearch.style.display = 'block';
+    },
+    /*
+     * showGoogleSearch
+     * Show the Google search UI
+     */
+    showHybridSearch: function() {
+        console.log('SearchBoxViewController.showHybridSearch()');
+        this.nominatimSearch.style.display = 'none';
+        this.googleSearch.style.display = 'none';
+        this.hybridSearch.style.display = 'block';
     }
 };

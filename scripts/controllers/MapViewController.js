@@ -4,8 +4,10 @@ function MapViewController(options) {
     console.log(options);
 
     /* Attributes */
+    this.mapId = options.mapId;
     this.map = null;
     this.searchInput = null;
+    this.searchButton = null;
     this.currentPosition = null;
     this.defaultZoom = 15;
     this.defaultPosition = {
@@ -17,6 +19,20 @@ function MapViewController(options) {
 }
 
 MapViewController.prototype = {
+    /*
+     * initMap
+     * Initializes and show the map
+     */
+    initMap: function() {
+        console.log('MapViewController.initMap()');
+    },
+    /*
+     * initSearchBox
+     * Initialize Search Box
+     */
+    initSearchBox: function() {
+        console.log('MapViewController.initSearchBox()');
+    },
     /*
      * showPosition
      * Show the specified position on the map

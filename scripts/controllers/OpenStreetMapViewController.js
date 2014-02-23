@@ -3,29 +3,53 @@ function OpenStreetMapViewController(options) { // extends MapViewController
     MapViewController.call(this, options);
 
     /* Initialize superclass attributes */
-    this.map = new OpenLayers.Map(options.mapId);
     this.searchInput = document.querySelector('#nominatimSearch input');
+    this.searchButton = document.querySelector('#nominatimSearch button');
 
     /* Declare and initialize OpenStreetMapViewController attributes */
     this.mapnik = new OpenLayers.Layer.OSM();
     this.fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
     this.toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection        
     this.markers = new OpenLayers.Layer.Markers("Markers");
-
-    /* Add layers */
-    this.map.addLayer(this.mapnik);
-    this.map.addLayer(this.markers);
-
-    /* Show the map */
-    var osmPosition = new OpenLayers.LonLat(this.defaultPosition.coords.longitude, this.defaultPosition.coords.latitude).transform(this.fromProjection, this.toProjection);
-    this.map.setCenter(osmPosition, this.defaultZoom);
-
 }
 
 /* OpenStreetMapViewController extends MapViewController */
 JS.extend(OpenStreetMapViewController, MapViewController);
 
 OpenStreetMapViewController.prototype = {
+    /*
+     * initMap
+     * Initializes and shows the map
+     */
+    initMap: function() {
+        MapViewController.prototype.initMap.call(this);
+
+        /* Initialize superclass attributes */
+        this.map = new OpenLayers.Map(this.mapId);
+
+        /* Add layers */
+        this.map.addLayer(this.mapnik);
+        this.map.addLayer(this.markers);
+
+        /* Show the map */
+        var osmPosition = new OpenLayers.LonLat(this.defaultPosition.coords.longitude, this.defaultPosition.coords.latitude).transform(this.fromProjection, this.toProjection);
+        this.map.setCenter(osmPosition, this.defaultZoom);
+    },
+    /*
+     * initSearchBox
+     * Initialize Nominatim Search Box
+     */
+    initSearchBox: function() {
+        MapViewController.prototype.initSearchBox.call(this);
+
+        var self = this;
+
+        /* Initialize event handlers */
+        this.searchButton.onclick = function() {
+            self.search(self.searchInput.value);
+            return false;
+        };
+    },
     /*
      * showPosition
      * Show the specified position on the map

@@ -2,27 +2,58 @@
 function GoogleMapViewController(options) { // extends MapViewController
     MapViewController.call(this, options);
 
-    /* Set GoogleMap options */
-    var mapOptions = {
-        zoom: this.defaultZoom,
-    };
+    /* Initialize superclass attributes */
+    this.searchInput = document.querySelector('#googleSearch input');
 
-    /* Initialize the Google Map */
-    this.map = new google.maps.Map(document.getElementById(options.mapId), mapOptions);
-
-    /* Show the map */
-    var gmPosition = new google.maps.LatLng(this.defaultPosition.coords.latitude, this.defaultPosition.coords.longitude);
-    this.map.setCenter(gmPosition);
-
-    /* Initialize Google Search Box */
+    /* Initialize GoogleMapViewController attributes */
     this.searchBox = null;
-    this.initSearchBox();
 }
 
 /* GoogleMapViewController extends MapViewController */
 JS.extend(GoogleMapViewController, MapViewController);
 
 GoogleMapViewController.prototype = {
+    /*
+     * initMap
+     * Initializes and shows the map
+     */
+    initMap: function() {
+        MapViewController.prototype.initMap.call(this);
+        
+        /* Set GoogleMap options */
+        var mapOptions = {
+            zoom: this.defaultZoom,
+        };
+
+        /* Initialize superclass attributes */
+        this.map = new google.maps.Map(document.getElementById(this.mapId), mapOptions);
+
+        /* Show the map */
+        var gmPosition = new google.maps.LatLng(this.defaultPosition.coords.latitude, this.defaultPosition.coords.longitude);
+        this.map.setCenter(gmPosition);
+    },
+    /*
+     * initSearchBox
+     * Initialize Google Search Box
+     */
+    initSearchBox: function() {
+        MapViewController.prototype.initSearchBox.call(this);
+
+        this.searchBox = new google.maps.places.SearchBox(this.searchInput);
+
+        var self = this;
+
+        /* Listen for the event fired when the user selects an item from the pick list. */
+        google.maps.event.addListener(this.searchBox, 'places_changed', function() {
+            self.search(self.searchInput.value);
+        });
+
+        /* Bias the SearchBox results towards places that are within the bounds of the current map's viewport. */
+        google.maps.event.addListener(this.map, 'bounds_changed', function() {
+            var bounds = self.map.getBounds();
+            self.searchBox.setBounds(bounds);
+        });
+    },
     /*
      * showPosition
      * Show the specified position on the map
@@ -60,29 +91,6 @@ GoogleMapViewController.prototype = {
      */
     handleGeolocationErrors: function(positionError) {
         MapViewController.prototype.handleGeolocationErrors.call(this, positionError);
-    },
-    /*
-     * initSearchBox
-     * Initialize Google Search Box
-     */
-    initSearchBox: function() {
-        console.log('GoogleMapViewController.initSearchBox()');
-
-        this.searchInput = document.querySelector('#googleSearch input');
-        this.searchBox = new google.maps.places.SearchBox(this.searchInput);
-
-        var self = this;
-
-        /* Listen for the event fired when the user selects an item from the pick list. */
-        google.maps.event.addListener(this.searchBox, 'places_changed', function() {
-            self.search(self.searchInput.value);
-        });
-
-        /* Bias the SearchBox results towards places that are within the bounds of the current map's viewport. */
-        google.maps.event.addListener(this.map, 'bounds_changed', function() {
-            var bounds = self.map.getBounds();
-            self.searchBox.setBounds(bounds);
-        });
     },
     /*
      * search
