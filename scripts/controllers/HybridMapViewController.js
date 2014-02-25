@@ -17,8 +17,8 @@ HybridMapViewController.prototype.initMap = function() {
     var mapOptions = {
         zoom: this.defaultZoom,
         mapTypeId: "OSM",
-        mapTypeControl: false,
-        streetViewControl: false
+        mapTypeControl: false, // disable user toggling between map types (such as ROADMAP and SATELLITE)
+        streetViewControl: false // disable Google StreetView
     };
 
     /* Initialize superclass attributes */
