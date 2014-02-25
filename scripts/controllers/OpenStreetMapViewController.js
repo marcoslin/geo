@@ -6,11 +6,11 @@ function OpenStreetMapViewController(options) { // extends MapViewController
     this.searchInput = document.querySelector('#nominatimSearch input');
     this.searchButton = document.querySelector('#nominatimSearch button');
 
-    /* Declare and initialize OpenStreetMapViewController attributes */
-    this.mapnik = new OpenLayers.Layer.OSM(); // This layer allows accessing OpenStreetMap tiles
-    this.fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
-    this.toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection        
-    this.markers = new OpenLayers.Layer.Markers("Markers");
+    /* OpenStreetMapViewController attributes */
+    this.mapnik = null;
+    this.fromProjection = null;
+    this.toProjection = null;
+    this.markers = null;
 }
 
 /* OpenStreetMapViewController extends MapViewController */
@@ -26,6 +26,12 @@ OpenStreetMapViewController.prototype = {
 
         /* Initialize superclass attributes */
         this.map = new OpenLayers.Map(this.mapId);
+
+        /* Initialize OpenStreetMapViewController attributes */
+        this.mapnik = new OpenLayers.Layer.OSM(); // This layer allows accessing OpenStreetMap tiles
+        this.fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+        this.toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection        
+        this.markers = new OpenLayers.Layer.Markers("Markers");
 
         /* Add layers */
         this.map.addLayer(this.mapnik);
