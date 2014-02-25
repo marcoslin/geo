@@ -7,7 +7,7 @@ function OpenStreetMapViewController(options) { // extends MapViewController
     this.searchButton = document.querySelector('#nominatimSearch button');
 
     /* Declare and initialize OpenStreetMapViewController attributes */
-    this.mapnik = new OpenLayers.Layer.OSM();
+    this.mapnik = new OpenLayers.Layer.OSM(); // This layer allows accessing OpenStreetMap tiles
     this.fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
     this.toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection        
     this.markers = new OpenLayers.Layer.Markers("Markers");
