@@ -1,6 +1,6 @@
 # Geo
 
-Geo is a map locator web application. It let users choose among OpenStreetMap, Google Maps, or an hybrid map that is a Google Map with OpenStreetMap tiles placed on it. 
+Geo is a geolocation web application. It let users choose among OpenStreetMap, Google Maps, and an hybrid map that is a Google Map with OpenStreetMap tiles placed on it. 
 
 ![Screenshot](https://mdn.mozillademos.org/files/7175/osm-search.png)
 
