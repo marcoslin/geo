@@ -12,14 +12,6 @@ The web app uses the Geolocation API to get the current position with the possib
 
 This demo is part of [this MDN page](https://developer.mozilla.org/en-US/Apps/Developing/gather_and_modify_data/Plotting_yourself_on_the_map) that explains how to use interactive maps in a Open Web App.
 
-## Project Setup
-
-No setup is needed. 
-
-## Testing
-
-Tests are to be written.
-
 ## Contributing
 
 - navigator (watchPosition)
