@@ -59,20 +59,13 @@ OpenStreetMapViewController.prototype = {
     /*
      * showPosition
      * Show the specified position on the map
-     * @param {Position|OpenLayers.LonLat} position
+     * @param {Position} position
      */
     showPosition: function(position) {
 
-        var plon, plat;
-
-        if (position.coords) { // Standard geolocation coords
-            plon = position.coords.longitude;
-            plat = position.coords.latitude;
-        }
-        else { // OpenLayers.LonLat
-            plon = position.lon;
-            plat = position.lat;
-        }
+        /* Retrieve longitude and latitude from Position */
+        var plon = position.coords.longitude;
+        var plat = position.coords.latitude;
 
         /* Calculate the OpenStreetMap position */
         var osmPosition = new OpenLayers.LonLat(plon, plat).transform(this.fromProjection, this.toProjection);
@@ -152,27 +145,18 @@ OpenStreetMapViewController.prototype = {
         };
 
         console.log(xhr);
-
-        return false;
     },
     /*
      * showPOIs
      * Show the Points Of Interest around the specified position
-     * @param {Position|OpenLayers.LonLat} position
+     * @param {OpenLayers.LonLat} position
      */
     showPOIs: function(position) {
         MapViewController.prototype.showPOIs.call(this, position);
 
-        var plon, plat;
-
-        if (position.coords) { // Standard geolocation coords
-            plon = position.coords.longitude;
-            plat = position.coords.latitude;
-        }
-        else { // OpenLayers.LonLat
-            plon = position.lon;
-            plat = position.lat;
-        }
+        /* Retrieve longitude and latitude from OpenLayers.LonLat */
+        var plon = position.lon;
+        var plat = position.lat;
 
         /* Show random positioned markers */
         var self = this;

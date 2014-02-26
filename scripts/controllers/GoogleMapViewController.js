@@ -57,13 +57,17 @@ GoogleMapViewController.prototype = {
     /*
      * showPosition
      * Show the specified position on the map
-     * @param {google.maps.LatLng} position
+     * @param {Position} position
      */
     showPosition: function(position) {
         MapViewController.prototype.showPosition.call(this, position);
 
+        /* Retrieve latitude and longitude from Position */
+        var plat = position.coords.latitude;
+        var plon = position.coords.longitude;
+
         /* Calculate the Google Maps position */
-        var gmPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        var gmPosition = new google.maps.LatLng(plat, plon);
 
         /* Set the center of the map */
         this.map.setCenter(gmPosition);
@@ -116,8 +120,6 @@ GoogleMapViewController.prototype = {
 
         /* Display points of interest around the position */
         this.showPOIs(place.geometry.location);
-
-        return false;
     },
     /*
      * showPOIs
@@ -127,7 +129,7 @@ GoogleMapViewController.prototype = {
     showPOIs: function(position) {
         MapViewController.prototype.showPOIs.call(this, position);
 
-        /* Retrieve latitude and longitude */
+        /* Retrieve latitude and longitude from google.maps.LatLng */
         var plat = position.d;
         var plon = position.e;
 
